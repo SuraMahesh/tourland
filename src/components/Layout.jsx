@@ -15,9 +15,9 @@ export default function Layout() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur">
         <div className="container flex h-16 items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-brand-teal-700 to-brand-olive-600" />
-            <div className="leading-tight">
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/tourland-logo.png" alt="Tourland - Sri Lanka tours" className="h-9 w-auto" />
+            <div className="leading-tight hidden md:block">
               <div className="text-sm font-extrabold tracking-tight text-slate-900">Tourland</div>
               <div className="text-xs font-semibold text-slate-500">Sri Lanka tours</div>
             </div>
@@ -57,8 +57,8 @@ export default function Layout() {
         <div className="container py-10">
           <div className="grid gap-6 md:grid-cols-3">
             <div>
-              <div className="text-sm font-extrabold text-slate-900">Tourland</div>
-              <p className="mt-2 text-sm text-slate-600">
+              <img src="/tourland-logo.png" alt="Tourland" className="h-8 mb-2" />
+              <p className="text-sm text-slate-600">
                 Minimal, private Sri Lanka tours—7 days, 14 days, and special-interest trips.
               </p>
             </div>
