@@ -51,26 +51,8 @@ export default function TourDetail() {
 
   return (
     <div>
-      <div className="container">
-        <button
-          className="btn btn-secondary mb-6"
-          onClick={downloadPdf}
-        >
-          Download PDF brochure
-        </button>
-      </div>
-
       <div ref={captureRef} style={{ background: '#fff' }}>
         <Section eyebrow={`${tour.days} days`} title={tour.title} desc={tour.summary}>
-
-          {/* Print header */}
-          <div className="hidden print:block mb-8 pb-4 border-b-2 border-brand-teal-600">
-            <div className="flex items-center justify-between">
-              <img src="/tourland-logo.png" alt="Tourland" className="h-12" />
-              <p className="text-sm text-slate-500">{tour.priceFrom}</p>
-            </div>
-            <p className="text-xs text-slate-400 mt-1">Tourland Sri Lanka | {contact.whatsappDisplay} | {contact.email}</p>
-          </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <a className="btn btn-primary" href={wa} target="_blank" rel="noreferrer">
@@ -79,9 +61,12 @@ export default function TourDetail() {
             <a className="btn btn-secondary" href={`mailto:${contact.email}?subject=${encodeURIComponent(`Tour inquiry: ${tour.title}`)}`}>
               Email inquiry
             </a>
+            <button className="btn btn-secondary" onClick={downloadPdf}>
+              Download PDF brochure
+            </button>
           </div>
 
-          <div className="mt-10 grid gap-8 md:grid-cols-3" ref={captureRef}>
+          <div className="mt-10 grid gap-8 md:grid-cols-3">
             <div className="md:col-span-2">
               <h3 className="text-lg font-extrabold text-slate-900">Itinerary</h3>
               <div className="mt-4 grid gap-3">
