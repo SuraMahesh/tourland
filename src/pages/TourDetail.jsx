@@ -1,9 +1,13 @@
 import { Link, useParams } from 'react-router-dom'
 import { useRef, useCallback, useState } from 'react'
 import html2pdf from 'html2pdf.js'
+import { useTranslation } from 'react-i18next'
 import { Section } from '../components/Section'
 import BookingForm from '../components/BookingForm'
 import { contact, tours } from '../data/tours'
+import { getCurrentSeason } from '../data/seasons'
+import WeatherWidget from '../components/WeatherWidget'
+import FlightStatusWidget from '../components/FlightStatusWidget'
 
 export default function TourDetail() {
   const { slug } = useParams()
@@ -11,10 +15,12 @@ export default function TourDetail() {
   const captureRef = useRef(null)
 
   // Customizer state
+  const { t } = useTranslation()
   const [pax, setPax] = useState(2)
   const [roomType, setRoomType] = useState('standard')
   const [addOns, setAddOns] = useState([])
   const [showBooking, setShowBooking] = useState(false)
+  const seasonInfo = getCurrentSeason()
 
   if (!tour) {
     return (
@@ -64,7 +70,21 @@ export default function TourDetail() {
   return (
     <div>
       <div ref={captureRef} style={{ background: '#fff' }}>
-        <Section eyebrow={`${tour.days} days`} title={tour.title} desc={tour.summary}>
+        <Section
+          eyebrow={
+            <span className="flex items-center gap-2">
+              <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-bold text-slate-700">{tour.days} days</span>
+              {seasonInfo.isPeak && (
+                <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-bold text-amber-800">High Season</span>
+              )}
+              {seasonInfo.isShoulder && !seasonInfo.isPeak && (
+                <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-bold text-green-800">Shoulder Season</span>
+              )}
+            </span>
+          }
+          title={tour.title}
+          desc={tour.summary}
+        >
 
           <div className="flex flex-wrap items-center gap-3">
             <button className="btn btn-primary" onClick={() => setShowBooking(true)}>
@@ -189,6 +209,35 @@ export default function TourDetail() {
                   </a>
                 </div>
               </div>
+
+              {/* Weather widget */}
+              <WeatherWidget />
+
+              {/* Flight status */}
+              <FlightStatusWidget />
+
+              {/* Seasonal pricing info */}
+              <div className={`mt-4 rounded-3xl border p-6 ${seasonInfo.isPeak ? 'border-amber-200 bg-amber-50' : seasonInfo.isShoulder ? 'border-green-200 bg-green-50' : 'border-emerald-200 bg-emerald-50'} `}>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">{seasonInfo.isPeak ? '☀️' : seasonInfo.isShoulder ? '🌿' : '🍃'}</span>
+                  <div className="text-sm font-bold text-slate-900">
+                    {seasonInfo.isPeak ? 'High Season' : seasonInfo.isShoulder ? 'Shoulder Season' : 'Green Season'}
+                  </div>
+                </div>
+                <p className="text-sm text-slate-700">
+                  {seasonInfo.isPeak
+                    ? 'Peak tourist season — warm, dry weather on west/south coasts. Perfect beach & safari conditions.'
+                    : seasonInfo.isShoulder
+                    ? 'Shoulder season — pleasant weather with fewer crowds and better prices. Great value for travelers.'
+                    : 'Green season — lush landscapes, fewer tourists, lower rates. Occasional light showers.'}
+                </p>
+                {seasonInfo.discount > 0 && (
+                  <div className="mt-3 text-sm font-bold text-green-800">
+                    Up to {seasonInfo.discount}% off during this season!
+                  </div>
+                )}
+              </div>
+
             </div>
           </div>
 

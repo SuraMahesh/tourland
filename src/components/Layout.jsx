@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { contact } from '../data/tours'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const navLinkClass = ({ isActive }) =>
   `text-sm font-semibold transition ${
@@ -41,6 +43,7 @@ export default function Layout() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <LanguageSwitcher />
             <a className="btn btn-secondary hidden sm:inline-flex" href={`mailto:${contact.email}`}>
               Email
             </a>
