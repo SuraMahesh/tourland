@@ -96,7 +96,7 @@ export const specials = [
     title: 'Sri Lanka Buddhism Trail',
     summary: 'Visit the most sacred Buddhist sites and ancient temples with deep local insight.',
     tag: 'Culture',
-    image: '/specials/buddhism-heritage.svg',
+    image: '/specials/buddhism-heritage.jpg',
   },
 ]
 
