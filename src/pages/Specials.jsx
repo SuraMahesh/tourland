@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Section } from '../components/Section'
 import { specials, contact } from '../data/tours'
 
@@ -15,7 +16,7 @@ export default function Specials() {
       >
         <div className="grid gap-6 md:grid-cols-3">
           {specials.map((s) => (
-            <div key={s.slug} className="group overflow-hidden rounded-3xl border border-slate-100 bg-white transition hover:border-slate-200 hover:shadow-md">
+            <Link key={s.slug} to={`/specials/${s.slug}`} className="group overflow-hidden rounded-3xl border border-slate-100 bg-white transition hover:border-slate-200 hover:shadow-md block">
               <div className="aspect-[3/2] overflow-hidden bg-gradient-to-br from-slate-50 to-white">
                 <img src={s.image} alt={s.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
               </div>
@@ -24,7 +25,7 @@ export default function Specials() {
                 <div className="mt-3 text-lg font-extrabold text-slate-900">{s.title}</div>
                 <p className="mt-2 text-sm text-slate-600">{s.summary}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
