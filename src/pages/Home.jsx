@@ -125,12 +125,17 @@ export default function Home() {
         title="Wildlife, surf, tea country, and sacred places"
         desc="Add special experiences to your trip. We’ll suggest the best timing and route."
       >
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {specials.slice(0, 6).map((s) => (
-            <div key={s.slug} className="rounded-3xl border border-slate-100 bg-white p-6">
-              <div className="badge">{s.tag}</div>
-              <div className="mt-3 text-lg font-extrabold text-slate-900">{s.title}</div>
-              <p className="mt-2 text-sm text-slate-600">{s.summary}</p>
+            <div key={s.slug} className="group overflow-hidden rounded-3xl border border-slate-100 bg-white transition hover:border-slate-200 hover:shadow-md">
+              <div className="aspect-[3/2] overflow-hidden bg-gradient-to-br from-slate-50 to-white">
+                <img src={s.image} alt={s.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              </div>
+              <div className="p-6">
+                <div className="badge">{s.tag}</div>
+                <div className="mt-3 text-lg font-extrabold text-slate-900">{s.title}</div>
+                <p className="mt-2 text-sm text-slate-600">{s.summary}</p>
+              </div>
             </div>
           ))}
         </div>

@@ -68,30 +68,35 @@ export const specials = [
     title: 'Kumana Bird Watching',
     summary: 'Expert bird watching in Kumana — see migratory birds and quiet trails.',
     tag: 'Nature',
+    image: '/specials/kumana-birding.svg',
   },
   {
     slug: 'yala-national-park',
     title: 'Yala National Park',
     summary: 'The best safari in Sri Lanka. Leopard sightings, private jeeps, and family-friendly pace.',
     tag: 'Wildlife',
+    image: '/specials/yala-national-park.svg',
   },
   {
     slug: 'hiriketiya-surf',
     title: 'Hiriketiya Surfing',
     summary: 'Surf the best waves in Sri Lanka. Beginner-friendly days, gear, and coastal stays.',
     tag: 'Sports',
+    image: '/specials/hiriketiya-surf.svg',
   },
   {
     slug: 'nuwara-eliya',
     title: 'Nuwara Eliya Highlands',
     summary: 'Cool climate, lush tea estates, waterfalls, and scenic colonial charm.',
     tag: 'Highlands',
+    image: '/specials/nuwara-eliya.svg',
   },
   {
     slug: 'buddhism-heritage',
     title: 'Sri Lanka Buddhism Trail',
     summary: 'Visit the most sacred Buddhist sites and ancient temples with deep local insight.',
     tag: 'Culture',
+    image: '/specials/buddhism-heritage.svg',
   },
 ]
 
