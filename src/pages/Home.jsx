@@ -10,7 +10,8 @@ export default function Home() {
   return (
     <div>
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-teal-50 via-white to-white" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/90 to-slate-800/80" />
+        <div className="absolute inset-0 bg-[url('/hero-bg.svg')]" style={{ backgroundSize: 'cover', backgroundPosition: 'center' }} />
         <div className="container relative py-16 md:py-24">
           <div className="grid items-center gap-10 md:grid-cols-2">
             <div>
