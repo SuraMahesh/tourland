@@ -172,14 +172,22 @@ export default function TourDetail() {
                 <p className="mt-2 text-sm text-slate-600">
                   Final price may vary. Send an inquiry and we'll confirm availability and exact cost.
                 </p>
-                <a
-                  className="mt-4 inline-block w-full rounded-full bg-green-500 px-4 py-3 text-center text-sm font-semibold text-white shadow hover:bg-green-600"
-                  href={`https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(`Hi Tourland! I want ${tour.title} for ${pax} person(s). Room type: ${roomType}. Activities: ${addOns.join(', ') || 'none'}. Travel dates: TBD. Please send a detailed quote.`)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  WhatsApp inquiry
-                </a>
+                <div className="mt-4 flex flex-col gap-2">
+                  <a
+                    className="inline-block w-full rounded-full bg-green-500 px-4 py-3 text-center text-sm font-semibold text-white shadow hover:bg-green-600"
+                    href={`https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(`Hi Tourland! I want ${tour.title} for ${pax} person(s). Room type: ${roomType}. Activities: ${addOns.join(', ') || 'none'}. Travel dates: TBD. Please send a detailed quote.`)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    WhatsApp inquiry
+                  </a>
+                  <a
+                    className="inline-block w-full rounded-full bg-slate-700 px-4 py-3 text-center text-sm font-semibold text-white shadow hover:bg-slate-800"
+                    href={`mailto:${contact.email}?subject=${encodeURIComponent(`Tour quote: ${tour.title} (${pax} pax)`)}&body=${encodeURIComponent(`Hi Tourland,\n\nI'd like a quote for:\nTour: ${tour.title}\nPassengers: ${pax}\nRoom type: ${roomType}\nActivities: ${addOns.join(', ') || 'none'}\nEstimated total: $${total}\n\nPlease send a detailed proposal.\n\nThanks!`)}`}
+                  >
+                    Email this quote
+                  </a>
+                </div>
               </div>
             </div>
           </div>
