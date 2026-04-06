@@ -36,7 +36,6 @@ export default function Tours() {
             Compare 7-day vs 14-day packages
           </Link>
         </div>
-        </div>
       </Section>
     </div>
   )
