@@ -74,12 +74,14 @@ export default function Layout() {
             >
               <div className="container py-4 flex flex-col gap-4">
                 {navLinks.map((link) => (
-                  <a key={link.to} href={link.to} className="text-base font-semibold py-2 `${isActive ? 'text-brand-teal-800' : 'text-slate-700'}`" onClick={() => setMobileMenuOpen(false)}">
-                {link.label}</a>
+                  <a
+                    key={link.to}
+                    href={link.to}
+                    className={`text-base font-semibold py-2 ${mobileMenuOpen ? 'text-brand-teal-800' : 'text-slate-700'}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.label}
-                  </NavLink>
+                  </a>
                 ))}
                 <a className="btn btn-secondary w-full text-center" href={`mailto:${contact.email}`}>
                   Email
