@@ -68,7 +68,7 @@ export const specials = [
     title: 'Kumana Bird Watching',
     summary: 'Expert bird watching in Kumana — see migratory birds and quiet trails.',
     tag: 'Nature',
-    image: '/specials/kumana-birding.svg',
+    image: '/specials/kumana-birding.webp',
   },
   {
     slug: 'yala-national-park',
