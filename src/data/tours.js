@@ -75,7 +75,7 @@ export const specials = [
     title: 'Yala National Park',
     summary: 'The best safari in Sri Lanka. Leopard sightings, private jeeps, and family-friendly pace.',
     tag: 'Wildlife',
-    image: '/specials/yala-national-park.svg',
+    image: '/specials/yala-national-park.avif',
   },
   {
     slug: 'hiriketiya-surf',
