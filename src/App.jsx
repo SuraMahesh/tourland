@@ -5,6 +5,7 @@ import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
 import Specials from './pages/Specials'
 import SpecialDetail from './pages/SpecialDetail'
+import Compare from './pages/Compare'
 import Hotels from './pages/Hotels'
 import Contact from './pages/Contact'
 
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/tours/:slug" element={<TourDetail />} />
         <Route path="/specials" element={<Specials />} />
         <Route path="/specials/:slug" element={<SpecialDetail />} />
+        <Route path="/compare" element={<Compare />} />
         <Route path="/hotels" element={<Hotels />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/" replace />} />

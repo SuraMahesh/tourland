@@ -1,14 +1,27 @@
 import { Link, useParams } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import html2pdf from 'html2pdf.js'
 import { Section } from '../components/Section'
 import { contact, tours } from '../data/tours'
+import TourPdfGenerator from './TourPdfGenerator'
 
 export default function TourDetail() {
   const { slug } = useParams()
   const tour = tours.find((t) => t.slug === slug)
+  const pdfRef = useRef(null)
+
+  useEffect(() => {
+    // Cleanup pdf container on unmount
+    return () => {
+      if (pdfRef.current) {
+        pdfRef.current.innerHTML = ''
+      }
+    }
+  }, [])
 
   if (!tour) {
     return (
-      <Section title="Tour not found" desc="Go back to packages." >
+      <Section title="Tour not found" desc="Go back to packages.">
         <Link className="btn btn-secondary" to="/tours">Back</Link>
       </Section>
     )
@@ -18,8 +31,22 @@ export default function TourDetail() {
     `Hi Tourland! I want this package: ${tour.title}\n\nTravel dates: \nNumber of people: \nHotel preference: boutique / mid-range / premium\nSpecial interests: \n`
   )}`
 
+  const downloadPdf = () => {
+    const element = document.getElementById(`pdf-${slug}`)
+    if (!element) return
+    const opt = {
+      margin:       [10, 10, 10, 10],
+      filename:     `${tour.slug}.pdf`,
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    }
+    html2pdf().set(opt).from(element).save()
+  }
+
   return (
     <div>
+      <TourPdfGenerator />
       <Section eyebrow={`${tour.days} days`} title={tour.title} desc={tour.summary}>
         <div className="flex flex-wrap items-center gap-3">
           <a className="btn btn-primary" href={wa} target="_blank" rel="noreferrer">
@@ -28,6 +55,9 @@ export default function TourDetail() {
           <a className="btn btn-secondary" href={`mailto:${contact.email}?subject=${encodeURIComponent(`Tour inquiry: ${tour.title}`)}`}>
             Email inquiry
           </a>
+          <button className="btn btn-secondary" onClick={downloadPdf}>
+            Download PDF brochure
+          </button>
         </div>
 
         <div className="mt-10 grid gap-8 md:grid-cols-3">

@@ -10,9 +10,9 @@ export default function Tours() {
         title="7 & 14 day Sri Lanka packages"
         desc="Start with a clean package, then customize hotels, route, and special interests."
       >
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {tours.map((t) => (
-            <Link key={t.slug} to={`/tours/${t.slug}`} className="rounded-3xl border border-slate-100 bg-white p-6 hover:border-slate-200 hover:shadow-sm">
+            <Link key={t.slug} to={`/tours/${t.slug}`} className="group rounded-3xl border border-slate-100 bg-white p-6 hover:border-slate-200 hover:shadow-md">
               <div className="flex items-center justify-between">
                 <div className="badge">{t.days} days</div>
                 <div className="text-sm font-bold text-slate-700">{t.priceFrom}</div>
@@ -26,9 +26,16 @@ export default function Tours() {
                   </span>
                 ))}
               </div>
-              <div className="mt-5 text-sm font-bold text-brand-teal-800">Open itinerary →</div>
+              <div className="mt-5 text-sm font-bold text-brand-teal-800 group-hover:underline">Open itinerary →</div>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link className="btn btn-secondary" to="/compare">
+            Compare 7-day vs 14-day packages
+          </Link>
+        </div>
         </div>
       </Section>
     </div>
