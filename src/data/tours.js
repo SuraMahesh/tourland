@@ -82,14 +82,14 @@ export const specials = [
     title: 'Hiriketiya Surfing',
     summary: 'Surf the best waves in Sri Lanka. Beginner-friendly days, gear, and coastal stays.',
     tag: 'Sports',
-    image: '/specials/hiriketiya-surf.svg',
+    image: '/specials/hiriketiya-surf.jpg',
   },
   {
     slug: 'nuwara-eliya',
     title: 'Nuwara Eliya Highlands',
     summary: 'Cool climate, lush tea estates, waterfalls, and scenic colonial charm.',
     tag: 'Highlands',
-    image: '/specials/nuwara-eliya.svg',
+    image: '/specials/nuwara-eliya.jpg',
   },
   {
     slug: 'buddhism-heritage',
