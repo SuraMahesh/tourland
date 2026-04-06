@@ -63,31 +63,53 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav overlay */}
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="border-t border-slate-100 bg-white md:hidden"
-            >
-              <div className="container py-4 flex flex-col gap-4">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.to}
-                    href={link.to}
-                    className={`text-base font-semibold py-2 ${mobileMenuOpen ? 'text-brand-teal-800' : 'text-slate-700'}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-                <a className="btn btn-secondary w-full text-center" href={`mailto:${contact.email}`}>
-                  Email
-                </a>
-              </div>
-            </motion.div>
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-slate-900/20 z-40 md:hidden"
+                onClick={() => setMobileMenuOpen(false)}
+              />
+              {/* Menu panel */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="fixed top-16 left-0 right-0 z-50 md:hidden"
+              >
+                <div className="border-t border-slate-100 bg-white p-4 shadow-lg">
+                  <div className="container flex flex-col gap-2">
+                    {navLinks.map((link) => (
+                      <NavLink
+                        key={link.to}
+                        to={link.to}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `py-3 px-4 rounded-lg ${
+                            isActive
+                              ? 'bg-brand-teal-50 text-brand-teal-800 font-semibold'
+                              : 'text-slate-700 hover:bg-slate-50'
+                          }`
+                        }
+                      >
+                        {link.label}
+                      </NavLink>
+                    ))}
+                    <a
+                      className="btn btn-secondary w-full text-center mt-2"
+                      href={`mailto:${contact.email}`}
+                    >
+                      Email
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
       </header>
