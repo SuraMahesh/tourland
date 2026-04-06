@@ -1,13 +1,20 @@
 import { Link, useParams } from 'react-router-dom'
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useState } from 'react'
 import html2pdf from 'html2pdf.js'
 import { Section } from '../components/Section'
+import BookingForm from '../components/BookingForm'
 import { contact, tours } from '../data/tours'
 
 export default function TourDetail() {
   const { slug } = useParams()
   const tour = tours.find((t) => t.slug === slug)
   const captureRef = useRef(null)
+
+  // Customizer state
+  const [pax, setPax] = useState(2)
+  const [roomType, setRoomType] = useState('standard')
+  const [addOns, setAddOns] = useState([])
+  const [showBooking, setShowBooking] = useState(false)
 
   if (!tour) {
     return (
@@ -16,6 +23,11 @@ export default function TourDetail() {
       </Section>
     )
   }
+
+  const basePrice = tour.priceFrom.includes('690') || tour.title.includes('7 days') ? 690 : 1290
+  const roomUpgrade = { standard: 0, deluxe: 50, suite: 120 }[roomType] * pax
+  const addOnCost = addOns.length * 100 * pax
+  const total = basePrice * pax + roomUpgrade + addOnCost
 
   const wa = `https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(
     `Hi Tourland! I want this package: ${tour.title}\n\nTravel dates: \nNumber of people: \nHotel preference: boutique / mid-range / premium\nSpecial interests: \n`
@@ -55,14 +67,17 @@ export default function TourDetail() {
         <Section eyebrow={`${tour.days} days`} title={tour.title} desc={tour.summary}>
 
           <div className="flex flex-wrap items-center gap-3">
-            <a className="btn btn-primary" href={wa} target="_blank" rel="noreferrer">
-              Book / Ask on WhatsApp
+            <button className="btn btn-primary" onClick={() => setShowBooking(true)}>
+              Book this tour
+            </button>
+            <a className="btn btn-secondary" href={wa} target="_blank" rel="noreferrer">
+              WhatsApp
             </a>
             <a className="btn btn-secondary" href={`mailto:${contact.email}?subject=${encodeURIComponent(`Tour inquiry: ${tour.title}`)}`}>
-              Email inquiry
+              Email
             </a>
             <button className="btn btn-secondary" onClick={downloadPdf}>
-              Download PDF brochure
+              PDF
             </button>
           </div>
 
@@ -93,12 +108,78 @@ export default function TourDetail() {
                 </ul>
               </div>
 
+              <div className="mt-4 rounded-3xl border border-brand-teal-100 bg-brand-teal-50/30 p-6">
+                <div className="text-sm font-bold text-slate-900">Quick price estimate</div>
+                <div className="mt-3 space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span>Base price ({pax} pax × ${basePrice})</span>
+                    <span className="font-semibold">${basePrice * pax}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Room upgrades ({roomType})</span>
+                    <span className="font-semibold">+${roomUpgrade}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Add-ons ({addOns.length})</span>
+                    <span className="font-semibold">+${addOnCost}</span>
+                  </div>
+                  <div className="border-t pt-2 text-base font-bold text-brand-teal-800 flex justify-between">
+                    <span>Estimated total</span>
+                    <span>${total}</span>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <div className="mb-2 text-sm font-semibold">Passengers</div>
+                  <select value={pax} onChange={e => setPax(parseInt(e.target.value))} className="w-full rounded-lg border border-slate-300 p-2 text-sm">
+                    {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n}</option>)}
+                  </select>
+                </div>
+
+                <div className="mt-4">
+                  <div className="mb-2 text-sm font-semibold">Room type</div>
+                  {['standard', 'deluxe', 'suite'].map(r => (
+                    <label key={r} className="flex items-center gap-2 mb-2 text-sm">
+                      <input
+                        type="radio"
+                        name="roomType"
+                        value={r}
+                        checked={roomType === r}
+                        onChange={() => setRoomType(r)}
+                      />
+                      <span className="capitalize">{r} (+${{standard:0, deluxe:50, suite:120}[r]} per person)</span>
+                    </label>
+                  ))}
+                </div>
+
+                <div className="mt-4">
+                  <div className="mb-2 text-sm font-semibold">Add-on activities (+$100 each)</div>
+                  {['Birding', 'Surf lesson', 'Tea tour', 'Dance show', 'Cooking'].map(act => (
+                    <label key={act} className="flex items-center gap-2 mb-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={addOns.includes(act)}
+                        onChange={() => setAddOns(a => a.includes(act) ? a.filter(x => x!==act) : [...a, act])}
+                      />
+                      <span>{act}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <div className="mt-4 rounded-3xl border border-slate-100 bg-gradient-to-br from-white to-brand-olive-50 p-6">
-                <div className="text-sm font-bold text-slate-900">Custom add-ons</div>
+                <div className="text-sm font-bold text-slate-900">Request booking</div>
                 <p className="mt-2 text-sm text-slate-600">
-                  Want birding (Kumana), Yala safari focus, Hiriketiya surf, tea country photography, or
-                  Buddhism heritage visits? Tell us and we'll add it.
+                  Final price may vary. Send an inquiry and we'll confirm availability and exact cost.
                 </p>
+                <a
+                  className="mt-4 inline-block w-full rounded-full bg-green-500 px-4 py-3 text-center text-sm font-semibold text-white shadow hover:bg-green-600"
+                  href={`https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(`Hi Tourland! I want ${tour.title} for ${pax} person(s). Room type: ${roomType}. Activities: ${addOns.join(', ') || 'none'}. Travel dates: TBD. Please send a detailed quote.`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp inquiry
+                </a>
               </div>
             </div>
           </div>
@@ -110,6 +191,9 @@ export default function TourDetail() {
           </div>
         </Section>
       </div>
+
+      {/* Booking modal */}
+      {showBooking && <BookingForm tourSlug={slug} tourTitle={tour.title} onClose={() => setShowBooking(false)} />}
     </div>
   )
 }

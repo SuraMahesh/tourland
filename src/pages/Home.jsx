@@ -174,6 +174,32 @@ export default function Home() {
           </div>
         </div>
       </Section>
+
+      <Section
+        eyebrow="Trip planner"
+        title="Not sure which tour is right?"
+        desc="Answer 4 quick questions and we'll recommend the perfect itinerary."
+      >
+        <div className="flex flex-col items-center gap-6 md:flex-row">
+          <div className="flex-1">
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li>• What length suits your schedule?</li>
+              <li>• What pace do you prefer?</li>
+              <li>• Which top experience excites you?</li>
+              <li>• Who are you traveling with?</li>
+            </ul>
+            <p className="mt-4 text-brand-teal-800 font-semibold">
+              Takes 1 minute. No email required.
+            </p>
+            <Link className="btn btn-primary mt-4" to="/quiz">
+              Start Trip Planner Quiz
+            </Link>
+          </div>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-6xl">🧭</div>
+          </div>
+        </div>
+      </Section>
     </div>
   )
 }
