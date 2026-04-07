@@ -13,7 +13,7 @@ export default function Home() {
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/90 to-slate-800/80" />
-        <div className="absolute inset-0 bg-[url('/hero-bg.svg')]" style={{ backgroundSize: 'cover', backgroundPosition: 'center' }} />
+        <div className="absolute inset-0 bg-[url('/hero-bg.avif')]" style={{ backgroundSize: 'cover', backgroundPosition: 'center' }} />
         
         {/* Content */}
         <div className="container relative z-10 px-4">
