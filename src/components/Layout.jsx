@@ -1,9 +1,7 @@
-import { useState } from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
 import { contact } from '../data/tours'
-import LanguageSwitcher from './LanguageSwitcher'
 
 const navLinkClass = ({ isActive }) =>
   `text-sm font-semibold transition ${
@@ -12,6 +10,11 @@ const navLinkClass = ({ isActive }) =>
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   const whatsappHref = `https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(
     'Hi Tourland! I want to plan a Sri Lanka tour.\n\nTrip length: 7 days / 14 days\nTravel dates: \nNumber of people: \nInterests: wildlife / beach / culture / tea country\n'
@@ -43,7 +46,6 @@ export default function Layout() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <LanguageSwitcher />
             <a className="btn btn-secondary hidden sm:inline-flex" href={`mailto:${contact.email}`}>
               Email
             </a>
