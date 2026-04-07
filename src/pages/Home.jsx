@@ -1,205 +1,137 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Section } from '../components/Section'
-import { tours, specials, contact } from '../data/tours'
+import { motion } from 'framer-motion'
+import { tours, specials } from '../data/tours'
+import TripQuiz from '../components/TripQuiz'
 
 export default function Home() {
-  const wa = `https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(
-    'Hi Tourland! I want to plan a Sri Lanka tour.\n\nTrip length: \nTravel dates: \nNumber of people: \n'
-  )}`
+  const [showQuiz, setShowQuiz] = useState(false)
 
   return (
     <div>
-      <section className="relative overflow-hidden">
+      {/* Hero Section - Full Screen */}
+      <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900/90 to-slate-800/80" />
         <div className="absolute inset-0 bg-[url('/hero-bg.svg')]" style={{ backgroundSize: 'cover', backgroundPosition: 'center' }} />
-        <div className="container relative py-16 md:py-24">
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div>
-              <div className="badge">Sri Lanka • Private tours • Flexible itineraries</div>
-              <h1 className="mt-4 text-4xl font-black tracking-tight text-slate-900 md:text-5xl">
-                Minimal, comfortable Sri Lanka trips — planned by locals.
-              </h1>
-              <p className="mt-4 max-w-xl text-slate-600">
-                Tourland arranges 7 and 14 day journeys across Sri Lanka—culture, tea country, wildlife,
-                and beach time. We recommend hotels to match your style and budget.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a className="btn btn-primary" href={wa} target="_blank" rel="noreferrer">
-                  Plan on WhatsApp
-                </a>
-                <Link className="btn btn-secondary" to="/tours">
-                  View packages
-                </Link>
-              </div>
-
-              <div className="mt-8 grid max-w-xl grid-cols-2 gap-4 text-sm">
-                <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                  <div className="font-bold text-slate-900">Private driver + guide</div>
-                  <div className="mt-1 text-slate-600">Comfortable travel, no rush.</div>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                  <div className="font-bold text-slate-900">Hotel recommendations</div>
-                  <div className="mt-1 text-slate-600">Boutique to family stays.</div>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                  <div className="font-bold text-slate-900">Wildlife & nature</div>
-                  <div className="mt-1 text-slate-600">Yala, Kumana, seasonal tips.</div>
-                </div>
-                <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                  <div className="font-bold text-slate-900">Special interests</div>
-                  <div className="mt-1 text-slate-600">Surf, temples, photography.</div>
-                </div>
-              </div>
+        
+        {/* Content */}
+        <div className="container relative z-10 px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+              Discover Sri Lanka
+              <span className="block text-brand-teal-400">Your Way</span>
+            </h1>
+            <p className="mt-6 text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
+              Private, custom tours — 7 days, 14 days, or your own itinerary. 
+              Wildlife, beaches, tea country, and ancient culture.
+            </p>
+            
+            {/* Trip Planner CTA */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => setShowQuiz(true)}
+                className="btn btn-primary text-lg px-8 py-4"
+              >
+                Plan My Trip
+              </button>
+              <Link to="/tours" className="btn btn-secondary text-lg px-8 py-4">
+                View Tours
+              </Link>
             </div>
 
-            <div className="relative">
-              <div className="aspect-[4/5] w-full rounded-3xl bg-gradient-to-br from-brand-teal-700 via-brand-teal-600 to-brand-olive-600 p-1 shadow-xl">
-                <div className="h-full w-full rounded-[22px] bg-white p-6">
-                  <div className="text-xs font-bold text-slate-500">POPULAR ROUTE</div>
-                  <div className="mt-2 text-xl font-extrabold text-slate-900">
-                    Culture → Tea Country → Safari → Beach
-                  </div>
-                  <div className="mt-4 grid gap-3 text-sm">
-                    {[
-                      'Sigiriya & Dambulla',
-                      'Kandy & sacred sites',
-                      'Nuwara Eliya tea estates',
-                      'Yala National Park',
-                      'Hiriketiya / South Coast',
-                    ].map((x) => (
-                      <div key={x} className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-3">
-                        <span className="h-2 w-2 rounded-full bg-brand-olive-600" />
-                        <span className="font-semibold text-slate-800">{x}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 rounded-2xl bg-brand-teal-50 p-4">
-                    <div className="text-xs font-bold text-brand-teal-900">Tip</div>
-                    <div className="mt-1 text-sm text-slate-700">
-                      Tell us your travel dates—we recommend the best parks & beach coast for the season.
-                    </div>
-                  </div>
-                </div>
+            {/* Quick stats */}
+            <div className="mt-12 flex justify-center gap-8 text-slate-400 text-sm">
+              <div>
+                <div className="text-2xl font-bold text-white">7-14</div>
+                <div>Days</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">50+</div>
+                <div>Destinations</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">100%</div>
+                <div>Private</div>
               </div>
             </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </section>
+
+      {/* Featured Tours */}
+      <section className="py-16 bg-slate-50">
+        <div className="container">
+          <h2 className="text-3xl font-extrabold text-center">Featured Tours</h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {tours.slice(0, 3).map(tour => (
+              <Link key={tour.slug} to={`/tours/${tour.slug}`} className="block group">
+                <div className="rounded-3xl bg-white p-6 shadow-sm transition group-hover:shadow-md">
+                  <div className="text-sm font-bold text-brand-teal-800">{tour.days} days</div>
+                  <h3 className="mt-2 text-xl font-extrabold">{tour.title}</h3>
+                  <p className="mt-2 text-slate-600 text-sm">{tour.summary}</p>
+                  <div className="mt-4 font-bold text-slate-900">From ${tour.priceFrom}</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link to="/tours" className="btn btn-secondary">View All Tours</Link>
           </div>
         </div>
       </section>
 
-      <Section
-        eyebrow="Packages"
-        title="Choose 7 days or 14 days"
-        desc="Two clean packages you can customize. We can adjust hotels, pace, and special interests."
-      >
-        <div className="grid gap-4 md:grid-cols-2">
-          {tours.map((t) => (
-            <Link
-              key={t.slug}
-              to={`/tours/${t.slug}`}
-              className="group rounded-3xl border border-slate-100 bg-white p-6 transition hover:border-slate-200 hover:shadow-sm"
-            >
-              <div className="flex items-center justify-between">
-                <div className="badge">{t.days} days</div>
-                <div className="text-sm font-bold text-slate-700">{t.priceFrom}</div>
-              </div>
-              <div className="mt-3 text-xl font-extrabold text-slate-900 group-hover:text-brand-teal-800">
-                {t.title}
-              </div>
-              <p className="mt-2 text-sm text-slate-600">{t.summary}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {t.highlights.slice(0, 4).map((h) => (
-                  <span key={h} className="rounded-full bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700">
-                    {h}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-5 text-sm font-bold text-brand-teal-800">View itinerary →</div>
-            </Link>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        eyebrow="Special tours"
-        title="Wildlife, surf, tea country, and sacred places"
-        desc="Add special experiences to your trip. We’ll suggest the best timing and route."
-      >
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {specials.slice(0, 6).map((s) => (
-            <Link key={s.slug} to={`/specials/${s.slug}`} className="group overflow-hidden rounded-3xl border border-slate-100 bg-white transition hover:border-slate-200 hover:shadow-md block">
-              <div className="aspect-[3/2] overflow-hidden bg-gradient-to-br from-slate-50 to-white">
-                <img src={s.image} alt={s.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-              </div>
-              <div className="p-6">
+      {/* Specials Preview */}
+      <section className="py-16">
+        <div className="container">
+          <h2 className="text-3xl font-extrabold text-center">Special Experiences</h2>
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {specials.slice(0, 3).map(s => (
+              <div key={s.slug} className="rounded-3xl border border-slate-100 bg-white p-6">
                 <div className="badge">{s.tag}</div>
-                <div className="mt-3 text-lg font-extrabold text-slate-900">{s.title}</div>
+                <h3 className="mt-3 text-lg font-extrabold">{s.title}</h3>
                 <p className="mt-2 text-sm text-slate-600">{s.summary}</p>
               </div>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-8">
-          <Link className="btn btn-secondary" to="/specials">
-            View all specials
-          </Link>
-        </div>
-      </Section>
-
-      <Section
-        eyebrow="Hotels"
-        title="We recommend hotels that match your style"
-        desc="Tell us your budget and preference—minimal boutique, family rooms, or premium stays."
-      >
-        <div className="rounded-3xl border border-slate-100 bg-gradient-to-br from-white to-brand-teal-50 p-8">
-          <div className="grid gap-6 md:grid-cols-3">
-            <div>
-              <div className="text-lg font-extrabold text-slate-900">Comfort first.</div>
-              <p className="mt-2 text-sm text-slate-600">
-                We’ll propose a hotel plan for each location—close to key sites and suitable for your pace.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white p-5">
-              <div className="text-sm font-bold text-slate-900">Boutique stays</div>
-              <div className="mt-1 text-sm text-slate-600">Great design, peaceful views.</div>
-            </div>
-            <div className="rounded-2xl bg-white p-5">
-              <div className="text-sm font-bold text-slate-900">Family-friendly</div>
-              <div className="mt-1 text-sm text-slate-600">Spacious rooms, easy check-ins.</div>
-            </div>
+            ))}
           </div>
-          <div className="mt-6">
-            <Link className="btn btn-secondary" to="/hotels">See regions & notes</Link>
+          <div className="mt-8 text-center">
+            <Link to="/specials" className="btn btn-secondary">All Specials</Link>
           </div>
         </div>
-      </Section>
+      </section>
 
-      <Section
-        eyebrow="Trip planner"
-        title="Not sure which tour is right?"
-        desc="Answer 4 quick questions and we'll recommend the perfect itinerary."
-      >
-        <div className="flex flex-col items-center gap-6 md:flex-row">
-          <div className="flex-1">
-            <ul className="space-y-2 text-sm text-slate-600">
-              <li>• What length suits your schedule?</li>
-              <li>• What pace do you prefer?</li>
-              <li>• Which top experience excites you?</li>
-              <li>• Who are you traveling with?</li>
-            </ul>
-            <p className="mt-4 text-brand-teal-800 font-semibold">
-              Takes 1 minute. No email required.
+      {/* Trip Planner Section (below fold) */}
+      <section className="py-16 bg-slate-50">
+        <div className="container">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-3xl font-extrabold">Not sure which tour?</h2>
+            <p className="mt-4 text-slate-600">
+              Answer 4 quick questions and we'll recommend the perfect itinerary.
             </p>
-            <Link className="btn btn-primary mt-4" to="/quiz">
+            <button 
+              onClick={() => setShowQuiz(true)}
+              className="btn btn-primary mt-6"
+            >
               Start Trip Planner Quiz
-            </Link>
-          </div>
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-6xl">🧭</div>
+            </button>
           </div>
         </div>
-      </Section>
+      </section>
+
+      {/* Trip Quiz Modal */}
+      {showQuiz && <TripQuiz onClose={() => setShowQuiz(false)} />}
     </div>
   )
 }
