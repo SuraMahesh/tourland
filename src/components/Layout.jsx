@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { contact } from '../data/tours'
@@ -10,11 +10,28 @@ const navLinkClass = ({ isActive }) =>
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const menuRef = useRef(null)
   const location = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
+
+  // Close mobile menu on outside click
+  useEffect(() => {
+    if (!mobileMenuOpen) return
+    const handleClick = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMobileMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    document.addEventListener('touchstart', handleClick)
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+      document.removeEventListener('touchstart', handleClick)
+    }
+  }, [mobileMenuOpen])
 
   const whatsappHref = `https://wa.me/${contact.whatsappE164}?text=${encodeURIComponent(
     'Hi Tourland! I want to plan a Sri Lanka tour.\n\nTrip length: 7 days / 14 days\nTravel dates: \nNumber of people: \nInterests: wildlife / beach / culture / tea country\n'
@@ -78,15 +95,17 @@ export default function Layout() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-slate-900/20 z-40 md:hidden"
+                className="fixed inset-0 bg-slate-900/60 z-[60] md:hidden"
                 onClick={() => setMobileMenuOpen(false)}
               />
               {/* Menu panel */}
               <motion.div
+                ref={menuRef}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="fixed top-16 left-0 right-0 z-50 md:hidden"
+                className="fixed top-16 left-0 right-0 z-[70] md:hidden"
+                onClick={(e) => e.stopPropagation()}
               >
                 <div className="border-t border-slate-100 bg-white p-4 shadow-lg">
                   <div className="container flex flex-col gap-2">
